@@ -82,24 +82,12 @@ var displayModal = function(obj) {
         htmlDom.innerHTML = obj
     }
 
-    var parElement = document.createElement('div')
-    parElement.classList.add('modal')
-    var button = document.createElement('input')
-    button.type = 'button'
-    button.value = 'Close'
-    button.addEventListener('click', function() {
-        document.getElementsByTagName('body')[0].classList.remove('dialogIsOpen')
-        window.location.href = '#'
-    }, false)
-    parElement.appendChild(button)
-    parElement.appendChild(htmlDom)
-
     // append the entry and the top
-    var el = document.getElementById('modal')
+    var el = document.getElementById('modalContent')
     el.innerHTML = ''
-    el.appendChild(parElement)
+    el.appendChild(htmlDom)
 
-    document.getElementsByTagName("body")[0].classList.add('dialogIsOpen')
+    document.getElementById('modalwrapper').classList.add('dialogIsOpen')
 }
 
 var displayNotification = function(obj, className) {

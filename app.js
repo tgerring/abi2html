@@ -746,4 +746,8 @@ AppStatus.prototype.setHandlers = function() {
       func()
 
   }, false)
+  document.getElementById('modalClose').addEventListener('click', function() {
+      document.getElementById('modalwrapper').classList.remove('dialogIsOpen')
+      window.location.href = '#'
+  }, false)
 }
