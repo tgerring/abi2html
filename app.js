@@ -174,7 +174,7 @@ AppStatus.prototype.renderCodeView = function() {
   a.addEventListener('click', function(ev) {
     var num = _this.loadedDocs.length
     var ah = new AbiHtml()
-    var filename = window.prompt('New document name', 'Untitled '+num.toString())
+    var filename = window.prompt('New document name', 'Untitled ' + num.toString())
     if (filename == null) return
     ah.name = filename
     _this.selectedDocIndex = num
@@ -243,8 +243,38 @@ AppStatus.prototype.renderActions = function(ah) {
 
 
   // clear function UI
+  document.getElementById('tab-container').innerHTML = ''
   document.getElementById('main-container').innerHTML = ''
 
+  var transactCallback = function(){}
+  var item = ah.GetConstructor()
+  if (item) {
+    // generate UI DOM
+    var section = document.createElement('section')
+    section.classList.add('ac-container')
+    var div = document.createElement('div')
+    var input = document.createElement('input')
+    input.type = 'checkbox'
+    input.id = 'acc-constructor' + item.name
+    input.name = 'acc-constructor'
+    var label = document.createElement('label')
+    label.htmlFor = input.id
+    label.innerHTML = item.name
+    var article = document.createElement('article')
+    article.classList.add('ac-large')
+
+
+    // item.inputs.forEach(function(i) {
+      // TODO extract this to ui.js
+      article.appendChild(item.makeFieldForm(callCallback, transactCallback))
+    // })
+    div.appendChild(input)
+    div.appendChild(label)
+    div.appendChild(article)
+    section.appendChild(div)
+
+    document.getElementById('tab-container').appendChild(section)
+  }
   // loop through functions
   ah.GetFunctionsSorted().forEach(function(f) {
 
@@ -561,7 +591,7 @@ AppStatus.prototype.routeApp = function() {
         }
         break
       default:
-      	var ah = _this.getCurDoc()
+        var ah = _this.getCurDoc()
         if (!ah) break
         if (parts[0] in ah.functions)
           document.getElementById('acc-function' + parts[0]).checked = true
@@ -747,7 +777,7 @@ AppStatus.prototype.setHandlers = function() {
 
   }, false)
   document.getElementById('modalClose').addEventListener('click', function() {
-      document.getElementById('modalwrapper').classList.remove('dialogIsOpen')
-      window.location.href = '#'
+    document.getElementById('modalwrapper').classList.remove('dialogIsOpen')
+    window.location.href = '#'
   }, false)
 }
