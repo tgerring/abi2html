@@ -613,7 +613,6 @@ textarea[disabled] {
 
 ul.abi.function, ul.abi.event {
     list-style-type: none;
-    // padding-left: 0;
 }
 
 li.abi.function.input:before, li.abi.event.input:before {
@@ -624,3 +623,6 @@ li.abi.function.output:before, li.abi.event.output:before {
     content: "\00ab\00a0";
 }
 
+#tab-container section.ac-container {
+    background-color: thistle;
+}
