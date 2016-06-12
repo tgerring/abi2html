@@ -4,8 +4,16 @@
 <head>
     <title>abi2html</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- inject:css --><link rel="stylesheet" href="css/index.css"><!-- endinject -->
-    <!-- inject:js --><script src="scripts/lib/bignumber.min.js"></script><script src="scripts/lib/web3-light.min.js"></script><script src="scripts/lib/abi2html.js"></script><script src="scripts/app.js"></script><script src="scripts/ui.js"></script><!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="scripts/lib/bignumber.min.js"></script>
+    <script src="scripts/lib/web3-light.min.js"></script>
+    <script src="scripts/lib/abi2html.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/ui.js"></script>
+    <!-- endinject -->
     <script type="text/javascript">
     var web3 = (typeof web3 === 'undefined' ? new Web3() : web3)
     var appStatus = new AppStatus()
@@ -21,7 +29,7 @@
                 // debug
                 // gistId = "505534d5a37ffa3a0625"
                 gistId = "0e1b884de82d35053a34"
-                // address = "0x63f33b08404987648ce2dde79715e14e8b69e4d8"
+                    // address = "0x63f33b08404987648ce2dde79715e14e8b69e4d8"
                 address = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
                 providerString = 'http://127.0.0.1:8545'
             } else if (window.location.host === 'tgerring.github.io') {
@@ -149,22 +157,26 @@
                                     <ul id="pending-tx"></ul>
                                 </div>
                                 <div class="inline">
-                                    <input type="button" value="Update" id="btnWatch">
                                     <input type="button" onclick="document.getElementById('main').classList.toggle('flip');" value="Code">
                                     <input type="button" id="btnSend" value="Send" class="stack">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="status">
+                        <label for="option-from">Account:</label>
+                        <select id="option-from" disabled>
+                            <option>Not connected</option>
+                        </select>
+                        <label for="option-address">Watch address:</label>
+                        <input type="text" id="option-address" class="solfield address" placeholder="0x" disabled>
+                        <input type="button" value="Update" id="btnWatch">
+                    </div>
                     <div class="main">
                         <div class="wrapper">
                             <div id="functions">
                                 <div>
                                     <h2>Functions</h2>
-                                    <label for="option-from">Account:</label>
-                                    <select id="option-from" disabled>
-                                        <option>Not connected</option>
-                                    </select>
                                     <div>
                                         <div id="tab-container">
                                             <ul>
@@ -178,8 +190,6 @@
                             <div id="logs">
                                 <div>
                                     <h2>Events</h2>
-                                    <label for="option-address">Watch address:</label>
-                                    <input type="text" id="option-address" class="solfield address" placeholder="0x" disabled>
                                     <div id="log-search"></div>
                                     <div id="message-container"></div>
                                 </div>
@@ -193,7 +203,7 @@
                             <nav id="docnav">
                             </nav>
                             <div>
-                                <input type="button" id="btnDeploy" value="Deploy">
+                                <!-- <input type="button" id="btnDeploy" value="Deploy"> -->
                                 <input type="button" id="btnSave" value="Save">
                                 <input type="button" id="btnViewInterface" value="UI">
                             </div>

@@ -197,7 +197,7 @@ AppStatus.prototype.renderCodeView = function() {
     else if (ah.abi) sc.value = JSON.stringify(ah.abi, null, "  ")
     else sc.value = ''
 
-    document.getElementById('btnDeploy').disabled = ('source' in ah ? false : true)
+    // document.getElementById('btnDeploy').disabled = ('source' in ah ? false : true)
 
     var el = document.getElementById('abi-tree')
     el.innerHTML = ''
@@ -729,53 +729,53 @@ AppStatus.prototype.setHandlers = function() {
       func()
 
   }, false)
-  document.getElementById('btnDeploy').addEventListener('click', function(ev) {
-    var func = function() {
+  // document.getElementById('btnDeploy').addEventListener('click', function(ev) {
+  //   var func = function() {
 
-      var ah = _this.getCurDoc()
-      if (!ah) return
+  //     var ah = _this.getCurDoc()
+  //     if (!ah) return
 
-      var txdia = makeTransactionDialog('Deploy: ' + ah.name, function(transactionOptions) {
-        watchEvents(transactionOptions.to)
-        try {
-          web3Function.Transact(transactionOptions, function(evmFunction) {
-            if (evmFunction.error) {
-              document.getElementById('tx-message').innerHTML = evmFunction.error.toString()
-                // displayNotification(evmFunction.error.toString(), 'error')
-            } else {
-              document.getElementsByTagName("body")[0].classList.remove('dialogIsOpen')
-              appStatus.addTransaction(evmFunction.transactionHash)
-              appStatus.displayPending()
-            }
-          })
+  //     var txdia = makeTransactionDialog('Deploy: ' + ah.name, function(transactionOptions) {
+  //       watchEvents(transactionOptions.to)
+  //       try {
+  //         web3Function.Transact(transactionOptions, function(evmFunction) {
+  //           if (evmFunction.error) {
+  //             document.getElementById('tx-message').innerHTML = evmFunction.error.toString()
+  //               // displayNotification(evmFunction.error.toString(), 'error')
+  //           } else {
+  //             document.getElementsByTagName("body")[0].classList.remove('dialogIsOpen')
+  //             appStatus.addTransaction(evmFunction.transactionHash)
+  //             appStatus.displayPending()
+  //           }
+  //         })
 
-        } catch (e) {
-          document.getElementById('tx-message').innerHTML = e.toString()
-        }
-      }, {
-        to: null,
-        data: null,
-        gas: 3000000,
-        gasPrice: web3.eth.gasPrice
-      })
+  //       } catch (e) {
+  //         document.getElementById('tx-message').innerHTML = e.toString()
+  //       }
+  //     }, {
+  //       to: null,
+  //       data: null,
+  //       gas: 3000000,
+  //       gasPrice: web3.eth.gasPrice
+  //     })
 
-      var div = document.createElement('div')
-      var p = document.createElement('p')
-      p.classList.add('error')
-      p.innerHTML = 'Constructor fields not implemented'
-      div.appendChild(p)
-      div.appendChild(txdia)
-      displayModal(div)
-    }
+  //     var div = document.createElement('div')
+  //     var p = document.createElement('p')
+  //     p.classList.add('error')
+  //     p.innerHTML = 'Constructor fields not implemented'
+  //     div.appendChild(p)
+  //     div.appendChild(txdia)
+  //     displayModal(div)
+  //   }
 
-    if (!connectInstance()) {
-      displayModal(makeConnectionDialog(function() {
-        func()
-      }))
-    } else
-      func()
+  //   if (!connectInstance()) {
+  //     displayModal(makeConnectionDialog(function() {
+  //       func()
+  //     }))
+  //   } else
+  //     func()
 
-  }, false)
+  // }, false)
   document.getElementById('modalClose').addEventListener('click', function() {
     document.getElementById('modalwrapper').classList.remove('dialogIsOpen')
     window.location.href = '#'
