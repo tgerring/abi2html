@@ -4,8 +4,10 @@
 <head>
     <title>abi2html</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- inject:css --><!-- endinject -->
-    <!-- inject:js --><!-- endinject -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- inject:js -->
+    <!-- endinject -->
     <script type="text/javascript">
     var web3 = (typeof web3 === 'undefined' ? new Web3() : web3)
     var appStatus = new AppStatus()
@@ -149,22 +151,26 @@
                                     <ul id="pending-tx"></ul>
                                 </div>
                                 <div class="inline">
-                                    <input type="button" value="Update" id="btnWatch">
                                     <input type="button" onclick="document.getElementById('main').classList.toggle('flip');" value="Code">
                                     <input type="button" id="btnSend" value="Send" class="stack">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="status">
+                        <label for="option-from">Account:</label>
+                        <select id="option-from" disabled>
+                            <option>Not connected</option>
+                        </select>
+                        <label for="option-address">Watch address:</label>
+                        <input type="text" id="option-address" class="solfield address" placeholder="0x" disabled>
+                        <input type="button" value="Update" id="btnWatch">
+                    </div>
                     <div class="main">
                         <div class="wrapper">
                             <div id="functions">
                                 <div>
                                     <h2>Functions</h2>
-                                    <label for="option-from">Account:</label>
-                                    <select id="option-from" disabled>
-                                        <option>Not connected</option>
-                                    </select>
                                     <div>
                                         <div id="tab-container">
                                             <ul>
@@ -178,8 +184,6 @@
                             <div id="logs">
                                 <div>
                                     <h2>Events</h2>
-                                    <label for="option-address">Watch address:</label>
-                                    <input type="text" id="option-address" class="solfield address" placeholder="0x" disabled>
                                     <div id="log-search"></div>
                                     <div id="message-container"></div>
                                 </div>

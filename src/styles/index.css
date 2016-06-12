@@ -19,7 +19,7 @@ dfn {
     cursor: help;
 }
 
-input[type=button],
+.header input[type=button],
 button {
     border: 1px solid gray;
     background-color: #ffff66;
@@ -176,7 +176,7 @@ general layout
 
 #uiview .main {
     position: absolute;
-    top: 150px;
+    top: 200px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -625,4 +625,16 @@ li.abi.function.output:before, li.abi.event.output:before {
 
 #tab-container section.ac-container {
     background-color: thistle;
+}
+
+.status {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width:  100%;
+    padding: 1em;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    background-color: orange;
+    text-align: center;
 }
