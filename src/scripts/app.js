@@ -108,19 +108,6 @@ AppStatus.prototype.getCurDoc = function() {
   else return undefined
 }
 
-AppStatus.prototype.updateDoc = function() {
-  // this whole function should be cleaned up
-  var source = document.getElementById('source-code').value
-
-  var ah
-  if (source) ah = new AbiHtml(source)
-
-  if (this.loadedDocs && this.selectedDocIndex in this.loadedDocs && 'name' in this.loadedDocs[this.selectedDocIndex]) ah.name = this.loadedDocs[this.selectedDocIndex].name
-  if (!('name' in ah)) ah.name = 'Untitled' + this.selectedDocIndex
-
-  if (ah) this.loadedDocs[this.selectedDocIndex] = ah
-}
-
 AppStatus.prototype.renderInterface = function() {
   var _this = this
   this.renderCodeView()
@@ -146,6 +133,19 @@ AppStatus.prototype.renderInterface = function() {
     var address = document.getElementById('option-address').value
     _this.watchEvents(address)
   }
+}
+
+AppStatus.prototype.newDocument = function(source) {
+  var num = this.loadedDocs.length
+  var filename = window.prompt('New document name', 'Untitled ' + num.toString())
+  if (filename == null) return
+
+  var ah = new AbiHtml(source)
+  ah.name = filename
+
+  this.selectedDocIndex = num
+  this.loadedDocs.push(ah)
+  // this.renderCodeView()
 }
 
 AppStatus.prototype.renderCodeView = function() {
@@ -175,16 +175,10 @@ AppStatus.prototype.renderCodeView = function() {
   // add a trailing tab for adding new documents
   var addTab = document.createElement('li')
   var a = document.createElement('a')
-  a.innerHTML = "+"
+  a.innerHTML = '+'
   a.addEventListener('click', function(ev) {
-    var num = _this.loadedDocs.length
-    var ah = new AbiHtml()
-    var filename = window.prompt('New document name', 'Untitled ' + num.toString())
-    if (filename == null) return
-    ah.name = filename
-    _this.selectedDocIndex = num
-    _this.loadedDocs.push(ah)
-    _this.renderCodeView()
+    _this.newDocument();
+    _this.renderCodeView();
   }, false)
 
   addTab.appendChild(a)
@@ -658,7 +652,10 @@ AppStatus.prototype.setHandlers = function() {
   }
 
   document.getElementById('btnSave').addEventListener('click', function(ev) {
-    appStatus.updateDoc()
+
+    var source = document.getElementById('source-code').value;
+    if (source) appStatus.newDocument(source)
+
     appStatus.renderCodeView()
     appStatus.renderActions()
     appStatus.renderSearch()
