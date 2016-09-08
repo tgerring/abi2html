@@ -44,8 +44,11 @@ AppStatus.prototype.displayPending = function() {
   }
   document.getElementById('pending-tx').innerHTML = msgTot
 
-  var block = web3.eth.getBlock('pending')
-  this.composeStatus(block)
+  var _this = this;
+  web3.eth.getBlock('pending', function(err, block) {
+    if (!err)
+      _this.composeStatus(block)
+  })
 }
 
 AppStatus.prototype.stopWatching = function() {
@@ -58,24 +61,26 @@ AppStatus.prototype.watchBlocks = function(cb) {
   // create filter for new blocks
   var filter = web3.eth.filter('latest')
   var _this = this
+  
   filter.watch(function(err, hash) {
     // get new block
-    var latest = web3.eth.getBlock(hash)
+    web3.eth.getBlock(hash, function(err, latest) {
 
-    // loop through transactions
-    for (var i = 0; i < latest.transactions.length; i++) {
-      // get transaction hash
-      var txhash = latest.transactions[i]
-      if (_this.isTransactionPending(txhash)) {
-        // callback
-        if (typeof callback === 'function') cb(txhash, latest)
+      // loop through transactions
+      for (var i = 0; i < latest.transactions.length; i++) {
+        // get transaction hash
+        var txhash = latest.transactions[i]
+        if (_this.isTransactionPending(txhash)) {
+          // callback
+          if (typeof callback === 'function') cb(txhash, latest)
 
-        // remove the transaction 
-        _this.removeTransaction(txhash)
+          // remove the transaction 
+          _this.removeTransaction(txhash)
+        }
       }
-    }
 
-    _this.displayPending()
+      _this.displayPending()
+    })
   })
 
   this.blockFilter = filter
@@ -662,12 +667,11 @@ AppStatus.prototype.setHandlers = function() {
   document.getElementById('btnWatch').addEventListener('click', function(ev) {
     var func = function() {
       var contractAddress = document.getElementById('option-address').value
-      try {
-        var code = web3.eth.getCode(contractAddress)
-      } catch (e) {
-        displayNotification(e.toString(), 'error')
-        return
-      }
+
+      web3.eth.getCode(contractAddress, function(error, result){
+        if (error) displayNotification(e.toString(), 'error')
+        else displayNotification('Contract found', 'success')
+      })
 
       // 2 for "0x" prefix
       if (code.length > 2) {
@@ -697,7 +701,7 @@ AppStatus.prototype.setHandlers = function() {
   document.getElementById('btnSend').addEventListener('click', function(ev) {
     var func = function() {
       displayModal(makeTransactionDialog('New transaction', function(transactionOptions) {
-        watchEvents(transactionOptions.to)
+        _this.watchEvents(transactionOptions.to)
         try {
 
           web3.eth.sendTransaction(transactionOptions, function(error, transactionHash) {
