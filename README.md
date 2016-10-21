@@ -14,7 +14,8 @@ Generate HTML page from Solidity ABI with JavaScript. This is useful as an "admi
 
 ```
 git clone https://github.com/tgerring/abi2html.git
-cd abi2html && open index.html
+cd abi2html && gulp build
+open build/index.html
 ```
 
 
